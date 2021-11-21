@@ -59,7 +59,7 @@ class Player():
 
     def __str__(self):
 
-        return f"{self.name} has {self.player_hand[0]} and {self.player_hand[1]}"
+        return f"{self.name} has {self.player_hand[0]} - {self.player_hand[1]}"
 
 class Dealer():
     '''Describes Dealer'''
@@ -151,15 +151,15 @@ def if_Ace(name,no_of_Ace,score,pscore):
                 score += 1
                 print(f"\n{name} Score is ** {score} **")
                 choice = 'wrong'
-            if 21 - score == 11:
+            elif 21 - score == 11:
                 score += 11
                 print(f"\n{name} Score is ** {score} **")
                 choice = 'wrong'
-            if pscore - score <= 11 and 21 - score >11:
+            elif (pscore - score <= 11) and (21 - score >11):
                 score += 11
                 print(f"\n{name} Score is ** {score} **")
                 choice = 'wrong'
-            if 16-score>=11:
+            elif 16-score>=11:
                 score += 11
                 print(f"\n{name} Score is ** {score} **")
                 choice = 'wrong'
@@ -167,7 +167,10 @@ def if_Ace(name,no_of_Ace,score,pscore):
                 score += 1
                 print(f"\n{name} Score is ** {score} **")
                 choice = 'wrong'
-        else:
+
+
+        elif name != 'Dealer':
+
             acceptable_choices = ['1','11']
             choice = 'wrong'
 
@@ -232,11 +235,11 @@ def bust_player(score,Player1,table):
 
     if score > 21:
 
-        print(f"{Player1.name} lost!")
+        print(f"{Player1.name} Busted!")
         print(f"{Player1.name} your new account is {Player1.account}")
         return play_again()
 
-    elif score == 21:
+    elif score == 21 and len(Player1.player_hand) == 2:
 
         print(f"{Player1.name} win BlackJack!")
         print(f"{Player1.name} your previous account was {Player1.account}")
@@ -269,9 +272,15 @@ def winner(dealer_score,player_score,table):
         print(f"{Player1.name} your new account is {Player1.account}")
         return play_again()
         
-    elif dealer_score>= player_score:
+    elif dealer_score > player_score:
         print(f"{Player1.name} lost!")
         print(f"{Player1.name} your new account is {Player1.account}")
+        return play_again()
+
+    elif dealer_score == player_score:
+        print("It is a tie")
+        Player1.win(table)
+        print(f"{Player1.name} your account is {Player1.account}")
         return play_again()
 
 def print_game(choice):
@@ -279,13 +288,13 @@ def print_game(choice):
     if choice =='s' or choice == "S":
         os.system("cls")
         print("\n\n")
-        print(Automated_Dealer,"and ",Automated_Dealer.dealer_hand[0],"and",end=" ")
+        print(Automated_Dealer,"-",Automated_Dealer.dealer_hand[0],"-",end=" ")
         for i in range(len(dealer_new_card)):
-            print(dealer_new_card[i], "and", end =" ")
+            print(dealer_new_card[i], "-", end =" ")
         print("\n\n")
-        print(Player1, "and", end =" ")
+        print(Player1, "-", end =" ")
         for i in range(len(player_new_cards)):
-            print(player_new_cards[i], "and", end=" ")
+            print(player_new_cards[i], "-", end=" ")
         print("\n")
         print(f"\n{Player1.name} Score is ** {player_score} **")
         print(f"Dealer score is ** {dealer_score} **")
@@ -294,9 +303,9 @@ def print_game(choice):
         os.system("cls")
         print("\n\n")
         print(Automated_Dealer,"\n\n")
-        print(Player1, "and", end =" ")
+        print(Player1, "-", end =" ")
         for i in range(len(player_new_cards)):
-            print(player_new_cards[i], "and", end=" ")
+            print(player_new_cards[i], "-", end=" ")
         print("\n")
         print(f"\n{Player1.name} Score is ** {player_score} **")
 
